@@ -1,0 +1,8 @@
+{
+	"name":"aloe",
+	"version":"0.0.1",
+	"description":"For review new emails of UL",
+	"dependencies":{
+		"jsdom":">=0.2.10"
+	}
+}
