@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Nuevo email</title>
+<script type="text/javascript">
+	var query = window.location.search;
+	var emailData = query.substring(query.indexOf('=')+1,query.length);
+	var email = JSON.parse(decodeURIComponent(emailData));
+	console.log(email);
+	window.onload = function(){
+		document.querySelector("#author").innerHTML = email.title;
+		document.querySelector("#content").innerHTML = email.description;
+		document.querySelector("#url").setAttribute("href",email.link);
+	}
+	</script>
+<style type="text/css">
+*{
+	margin:0;
+	border:0;
+	padding:0;
+}
+body {
+	font-size:12px;
+	font-family:"Tahoma","Arial";
+}
+#header {
+	margin-bottom:5px;
+	border-bottom:1px solid #CCC;
+	font-weight:bold;
+	background:#e2772c;
+	color:#FFF;
+	padding:5px;
+	height:100%;
+}
+#urlWrapper {
+	width:100%;
+	display:block;
+}
+#urlWrapper #url {
+	text-decoration:none;
+	color:#e2772c;
+}
+#url:hover {
+	cursor:pointer;
+	text-decoration:underline;
+}
+a:hover {
+	text-decoration:underline !important;
+}
+#main {
+	padding:5px;
+	padding-top:0px;
+}
+#content {
+
+}
+.button {
+	display:block;
+	width:100px;
+	height:30px;
+	line-height:30px;
+	font-weight:bold;
+	text-decoration:none;
+	color:#FFF;
+	text-align:center;
+	border-radius:3px;
+	-webkit-box-shadow:0px 0px 2px #CCC;
+	background:#e2772c;
+	margin-top:5px;
+	margin-left:90px;
+}
+.button:hover {
+	cursor:pounter;
+}
+</style>
+</head>
+<body>
+<div id="header">
+	Ulima Email Notifications
+</div>
+<div id="main">
+	<strong>Solo hace falta configurar la extensión para poder acceder a tu correo electrónico :</strong>
+	<a href="options.html" target="_blank" class="button">Configurar</a>
+</div>
+</body>

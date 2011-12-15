@@ -1,0 +1,14 @@
+{
+	"name":"Ulima Email",
+	"version":"1.0",
+	"description":"Extensión que te alerta cuando hay nuevos correos recibidos en tu cuenta universitaria.",
+	"background_page":"background.html",
+	"permissions":[
+		"cookies",
+		"tabs",
+		"http://aloe.ulima.edu.pe/email",
+		"https://aloe.ulima.edu.pe/email",
+		"http://*/",
+		"notifications"],
+	"options_page":"options.html"
+}

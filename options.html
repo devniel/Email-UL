@@ -1,0 +1,142 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>Opciones | Ulima Email</title>
+<script type="text/javascript">
+function save_options() {
+  	var usuario = document.querySelector("#usuario").value;
+  	var password = document.querySelector("#password").value;
+	localStorage.setItem("usuario",usuario);
+	localStorage.setItem("password",password);
+	
+	restore_options();	
+}  
+function restore_options() {
+  	var usuario = localStorage.getItem("usuario");
+	var password = localStorage.getItem("password");
+	if (!usuario) {
+		document.querySelector("#data").innerHTML = '<li><label>Código : </label><input id="usuario" type="text"/></li>'+
+		'<li id="lblPassword"><label>Contraseña : </label><input id="password" type="password"/></li>'+
+		'<li><label></label><button id="btnSave" onclick="save_options()">Guardar</button></li>';
+
+  	}else{
+		// SHOW CONFIGURATED OPTIONS
+		document.querySelector("#btnSave").style.display = "none";
+		var user = document.querySelector("#usuario");
+		user.setAttribute("value",usuario);
+		user.setAttribute("disabled","disabled");
+		document.querySelector("#password").style.display = "none";
+		document.querySelector("#lblPassword").style.display = "none";
+		var logout = document.createElement("button");
+		logout.setAttribute("onclick","logout()");
+		logout.innerHTML = "Cerrar sesión";
+		var li = document.createElement("li");
+		var lbl = document.createElement("label");
+		li.appendChild(lbl);
+		li.appendChild(logout);
+		document.querySelector("#data").appendChild(li);
+	}
+  	
+	
+}
+
+function logout(){
+	localStorage.removeItem("usuario");
+	localStorage.removeItem("password");
+	restore_options();
+}
+</script>
+<style type="text/css">
+*{
+	margin:0;
+	padding:0;
+}
+body {
+	background:url("eback.png");
+	position:relative;
+}
+#main {
+	width:580px;
+	height:380px;
+	margin-top:-200px;
+	margin-left:-300px;
+	position:absolute;
+	top:50%;
+	left:50%;
+	box-shadow:0px 3px 10px rgba(0,0,0,0.5);
+	background:#FFF;
+	padding:10px;
+	border-radius:5px;
+	border:10px solid #e4823e;
+	font-family : Tahoma, Arial, Verdana,serif;
+}
+ul {
+	list-style:none;
+	padding:0;
+	width:400px;
+}
+
+ul li {
+	float:left;
+	width:100%;
+	display:block;
+	margin-bottom:5px;
+}
+
+ul li label {
+	width:100px;
+	display:inline-block;
+	text-align:right;
+	margin-right:5px;
+}
+
+ul li input {
+	border:1px solid #CCC;
+	padding:5px;
+}
+button {
+	padding:5px;
+	background:#e4823e;
+	color:#FFF;
+	border:none;
+	font-weight:bold;
+	border-radius:3px;
+	box-shadow:0px 1px 1px #CCC;
+}
+button:hover {
+	cursor:pointer;
+	background:#c9631c;
+}
+button:active {
+	background:#934814;
+}
+#header {
+	background:#e4823e;
+	margin-top:-10px;
+	margin-left:-10px;
+	width:600px;
+	padding-top:5px;
+	padding-bottom:5px;
+	margin-bottom:20px;
+	color:#FFF;
+	opacity:1 !important;
+	font-weight:bold;
+}
+#header span {
+	margin-left:5px;
+	margin-top:-5px;
+	display:block;
+}
+</style>
+</head>
+<body onload="restore_options()">
+<div id="main">
+	<div id="header"><span>Configurar opciones:</span></div>
+	<ul id="data">
+		<li><label>Código : </label><input id="usuario" type="text"/></li>
+		<li id="lblPassword"><label>Contraseña : </label><input id="password" type="password"/></li>
+		<li><label></label><button id="btnSave" onclick="save_options()">Guardar</button></li>
+	</ul>
+</div>
+</body>
+</html>

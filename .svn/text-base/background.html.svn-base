@@ -1,0 +1,93 @@
+<script type="text/javascript">
+var requestInterval;
+function init(){
+	if(localStorage.getItem("usuario") == null){
+		localStorage.setItem("ul:unread",0);
+		var notification = webkitNotifications.createHTMLNotification("initialNotification.html");
+		notification.show();
+	}else{
+		review();
+	}
+}
+
+function review(){	
+	if(localStorage.getItem("usuario") == null){
+		clearInterval(requestInterval);
+	}else{
+		var req = new XMLHttpRequest();
+		var usuario = localStorage.getItem("usuario");
+		var password = localStorage.getItem("password");
+		var params = "user=" + usuario + "&password=" + password;
+		var server = "http://localhost:5000/email"
+		server = "http://hollow-summer-9522.herokuapp.com/email";
+		req.open("POST",server,true);
+		req.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+		req.setRequestHeader("Content-length",params.length);
+		req.setRequestHeader("Connection","close");
+		req.onreadystatechange = function(){
+			if(req.readyState === 4){
+				if(req.status === 200){
+					var emails = JSON.parse(req.responseText);
+					//console.log(emails);
+					notificate(emails);
+				} else {
+					console.log("Error",req.statusText);
+					//console.log(req.statusText);
+				}
+			}
+		};
+		req.send(params);
+	}
+}
+
+function equals(first,second){
+	var same = true;
+	if(first == null || second == null){
+		same = false;
+		return same;
+	}
+	for(var prop in first){
+			//console.log(first[prop] + " ---> " + second[prop]);
+			if(first[prop] != second[prop]){
+				same = false;
+				break;	
+			}
+	}
+	return same;
+}
+function notificate(emails){
+	//for(var i=0;i<emails.length;i++){	
+		var lastEmail = JSON.parse(localStorage.getItem("lastEmail"));
+		//console.log(lastEmail);
+		//console.log(emails[0]);
+		var same = equals(lastEmail,emails[0]);		
+		console.log(same);
+		if(!same){
+			// Comprobe if this appeared
+			var lastID = localStorage.getItem("ul:unread");
+			var appeared = false;
+			for(var i=0;i<parseInt(lastID);i++){
+				var email = JSON.parse(localStorage.getItem("ul:email:" + i));
+				console.log(i);
+				console.log(email);
+				console.log(emails[0]);
+				appeared = equals(emails[0],email);
+				console.log("APARECIO :" + appeared);
+				if(appeared)break;
+			}
+			if(!appeared){
+				localStorage.setItem("ul:email:" + lastID,JSON.stringify(lastEmail));
+				localStorage.setItem("ul:unread",parseInt(lastID) + 1);
+				localStorage.setItem("lastEmail",JSON.stringify(emails[0]));
+				var notification = webkitNotifications.createHTMLNotification("emailNotification.html?email=" + 
+								encodeURIComponent(JSON.stringify(emails[0])));
+				notification.show();
+			}
+		}
+		
+	//}
+}
+init();
+requestInterval = setInterval(review,60000);
+</script>
+

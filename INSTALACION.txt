@@ -1,0 +1,7 @@
+- Abrir Google Chrome
+- Hacer clic en el ícono de la herramienta en la esquina superior derecha
+- > Tools o Herramientas
+- > Extensions o Extensiones
+- Check en "Developer Mode" o "Modo Desarrolador"
+- "Load unpacked extension..." o "Cargar extension no empaquetada"
+- Seleccionar la carpeta descomprimida
